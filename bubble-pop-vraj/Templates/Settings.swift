@@ -1,11 +1,3 @@
-//
-//  Settings.swift
-//  bubble-pop-lahirurane
-//
-//  Created by Lahiru Ranasinghe on 3/5/19.
-//  Copyright © 2019 Lahiru Ranasinghe. All rights reserved.
-//
-
 import Foundation
 
 import SpriteKit

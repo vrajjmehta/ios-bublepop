@@ -9,7 +9,7 @@ class SettingsScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        backgroundColor = UIColor(red: 44/255, green: 62/255, blue: 80/255, alpha: 1.0)
+        backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         
         addLabels()
         loadSlider()
@@ -25,7 +25,7 @@ class SettingsScene: SKScene {
         addChild(highScoreLabel)
         
         
-        let gameTimeLbl = SKLabelNode(text: "Game Time")
+        let gameTimeLbl = SKLabelNode(text: "Game Time (sec)")
         gameTimeLbl.name = "gameTimeLbl"
         gameTimeLbl.fontName = "Noteworthy-Bold"
         gameTimeLbl.fontSize = 20.0
@@ -44,7 +44,7 @@ class SettingsScene: SKScene {
         }
         
         
-        let maxBubblesLbl = SKLabelNode(text: "Maximum Bubbles")
+        let maxBubblesLbl = SKLabelNode(text: "Max Bubbles")
         maxBubblesLbl.name = "maxBubblesLbl"
         maxBubblesLbl.fontName = "Noteworthy-Bold"
         maxBubblesLbl.fontSize = 20.0
@@ -94,8 +94,8 @@ class SettingsScene: SKScene {
             gameTimeSlider?.frame = CGRect(x: frame.minX + ((frame.width - 250) / 2), y: frame.midY - 100, width: 250, height: 35)
             
             
-            gameTimeSlider?.minimumTrackTintColor = .blue
-            gameTimeSlider?.maximumTrackTintColor = .blue
+            gameTimeSlider?.minimumTrackTintColor = .red
+            gameTimeSlider?.maximumTrackTintColor = .red
             gameTimeSlider?.thumbTintColor = .white
             
             gameTimeSlider?.maximumValue = 180
@@ -116,8 +116,8 @@ class SettingsScene: SKScene {
             bubbleNumberSlider?.frame = CGRect(x: frame.minX + ((frame.width - 250) / 2), y: frame.midY + 100, width: 250, height: 35)
             
             
-            bubbleNumberSlider?.minimumTrackTintColor = .blue
-            bubbleNumberSlider?.maximumTrackTintColor = .blue
+            bubbleNumberSlider?.minimumTrackTintColor = .red
+            bubbleNumberSlider?.maximumTrackTintColor = .red
             bubbleNumberSlider?.thumbTintColor = .white
             
             bubbleNumberSlider?.maximumValue = 15

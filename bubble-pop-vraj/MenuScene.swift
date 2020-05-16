@@ -7,7 +7,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
     var userNameErrorLbl : SKLabelNode?
     var themeColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
     
-    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         
@@ -31,10 +30,10 @@ class MenuScene: SKScene, UITextFieldDelegate {
         addChild(gameIcon)
       
         // Set Label Properties for Tap to Play
-        let playLabel = SKLabelNode(text: "Tap to Play!")
+        let playLabel = SKLabelNode(text: "Play the Game!")
         playLabel.name = "startGame"
         playLabel.fontName = "Marker Felt"
-        playLabel.fontSize = 50.0
+        playLabel.fontSize = 51.0
         playLabel.fontColor = themeColor
         playLabel.position = CGPoint(x: frame.midX, y: frame.midY + 20)
         playLabel.zPosition = 10
@@ -45,16 +44,16 @@ class MenuScene: SKScene, UITextFieldDelegate {
         let highScoreLabel = SKLabelNode(text: "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))")
         highScoreLabel.name = "highScore"
         highScoreLabel.fontName = "Noteworthy-Bold"
-        highScoreLabel.fontSize = 20.0
+        highScoreLabel.fontSize = 21.0
         highScoreLabel.fontColor = themeColor
         highScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - highScoreLabel.frame.size.height*2)
         addChild(highScoreLabel)
         
         // Set Label Properties for RecentScores
-        let recentScoreLabel = SKLabelNode(text: "Recentscore: " + "\(UserDefaults.standard.integer(forKey: "RecentScore"))")
+        let recentScoreLabel = SKLabelNode(text: "Lastscore: " + "\(UserDefaults.standard.integer(forKey: "RecentScore"))")
         recentScoreLabel.name = "recent"
         recentScoreLabel.fontName = "Noteworthy-Bold"
-        recentScoreLabel.fontSize = 20.0
+        recentScoreLabel.fontSize = 21.0
         recentScoreLabel.fontColor = themeColor
         recentScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - recentScoreLabel.frame.size.height*5)
         addChild(recentScoreLabel)
@@ -62,18 +61,19 @@ class MenuScene: SKScene, UITextFieldDelegate {
         // Set Label Properties for Settings
         let settingsLabel = SKLabelNode(text: "Settings " )
         settingsLabel.name = "settings"
-        settingsLabel.fontName = "Chalkduster"
-        settingsLabel.fontSize = 20.0
+        settingsLabel.fontName = "GillSans-SemiBoldItalic"
+        settingsLabel.fontSize = 22.0
         settingsLabel.fontColor = themeColor
-        settingsLabel.position = CGPoint(x: frame.midX - 50, y: frame.minY + 100)
+        settingsLabel.position = CGPoint(x: frame.midX - 55, y: frame.minY + 100)
         addChild(settingsLabel)
         
+        // Set Label Properties for Scores
         let scoreBoard = SKLabelNode(text: "Scores" )
         scoreBoard.name = "scoreBoard"
-        scoreBoard.fontName = "Chalkduster"
-        scoreBoard.fontSize = 20.0
+        scoreBoard.fontName = "GillSans-SemiBoldItalic"
+        scoreBoard.fontSize = 22.0
         scoreBoard.fontColor = themeColor
-        scoreBoard.position = CGPoint(x: frame.midX + 50 , y: frame.minY + 100)
+        scoreBoard.position = CGPoint(x: frame.midX + 55 , y: frame.minY + 100)
         addChild(scoreBoard)
         
     }
@@ -85,12 +85,11 @@ class MenuScene: SKScene, UITextFieldDelegate {
             UserDefaults.standard.set(60,forKey: "gametime")
             UserDefaults.standard.set(15,forKey: "maximumBalls")
         }
-       
     }
     
     func animation(label: SKLabelNode){
-        let fedOut = SKAction.fadeOut(withDuration: 0.5)
-        let fedIn = SKAction.fadeIn(withDuration: 0.5)
+        let fedOut = SKAction.fadeOut(withDuration: 0.55)
+        let fedIn = SKAction.fadeIn(withDuration: 0.55)
         let sequence = SKAction.sequence([fedOut, fedIn])
         label.run(SKAction.repeatForever(sequence))
     }
@@ -138,13 +137,9 @@ class MenuScene: SKScene, UITextFieldDelegate {
                     }else{
                         self.showUsernameError()
                     }
-                    
                 }))
-                
-                
                 //                presentViewController(alert, animated: true, completion: nil)
                 self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
-                
                 
             }else if touchedNode.name == "scoreBoard" {
                 // Call the function here.
@@ -156,8 +151,5 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 view!.presentScene(settingsScene)
             }
         }
-        
-        
     }
-    
 }

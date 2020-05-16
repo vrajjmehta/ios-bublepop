@@ -29,9 +29,7 @@ class GameScene: SKScene {
     let defaultColor = UIColor(red: 44/255, green: 62/255, blue: 80/255, alpha: 1.0)
     
     override func didMove(to view: SKView) {
-        
         backgroundColor = defaultColor
-        
         initBubbleTypes()
         showWelcomePanel()
         startWelcomeTimer()
@@ -44,7 +42,6 @@ class GameScene: SKScene {
     /// Initiate game timer and bubble timer
     /// Create Labels
     func startGame(){
-        
         addLabels()
         startGameTimer()
         bubbleGameTimer()
@@ -52,7 +49,6 @@ class GameScene: SKScene {
         highScore = UserDefaults.standard.integer(forKey: "Highscore")
         updateTimer()
         generateBubble()
-        
     }
     
     ///
@@ -78,7 +74,6 @@ class GameScene: SKScene {
                 userInfo: nil,
                 repeats: true
             )
-            
         }
     }
     
@@ -94,7 +89,6 @@ class GameScene: SKScene {
                 userInfo: nil,
                 repeats: true
             )
-            
         }
     }
     
@@ -110,7 +104,6 @@ class GameScene: SKScene {
                 userInfo: nil,
                 repeats: true
             )
-            
         }
     }
     
@@ -129,7 +122,6 @@ class GameScene: SKScene {
     
     /// Stop welcome timer and hides welcome panel
     func stopWelcomeTimer(){
-        
         if welcomeTimer != nil {
             welcomeTimer!.invalidate()
             welcomeTimer = nil
@@ -139,7 +131,6 @@ class GameScene: SKScene {
     
     ///Method updates count down timer when game starts
     @objc func welcomeTimeUpdate(){
-        
         welcomeTime -= 1
         if(welcomeTime > 0){
             welcomeTimeLbl?.text = "\(welcomeTime)"
@@ -149,16 +140,12 @@ class GameScene: SKScene {
             stopWelcomeTimer()
             startGame()
         }
-        
         welcomeTimeLbl?.run(welcomeTimerAnimate)
-        
-        
     }
     
     /// Method checks the bubble location can removes if it is out of the screen.
     @objc func gameBubbleUpdate(){
         for b in bubbles{
-            
             if(frame.maxY < b.frame.maxY || frame.minY > b.frame.minY ){
                 b.removeFromParent()
             }
@@ -170,9 +157,7 @@ class GameScene: SKScene {
     
     /// Method updates Game time
     /// Set hishscore and scoreboard after game is over
-    @objc func gameTimeUpdate()
-    {
-        
+    @objc func gameTimeUpdate(){
         if(timerCount % Int(refreshRate) == 0 ){
             removeRandomBubbles()
             generateBubble()
@@ -183,7 +168,6 @@ class GameScene: SKScene {
             
             isGameOver = true
             stopTimer()
-            
             
             UserDefaults.standard.set(Int(score), forKey: "RecentScore")
             if Int(score) > UserDefaults.standard.integer(forKey: "Highscore"){
@@ -201,9 +185,6 @@ class GameScene: SKScene {
             gameTime -= 1
             updateTimer()
         }
-        
-        
-        
     }
     
     /// Method add score to the scoreboard
@@ -235,14 +216,11 @@ class GameScene: SKScene {
         catch{
             print("Error in saving scoreboard ")
         }
-        
-        
     }
     
     
     /// Update timer label with the current game timer
     func updateTimer(){
-        
         timeLeftVal!.text = "\(gameTime)"
         
         if(gameTime < 6){
@@ -253,8 +231,6 @@ class GameScene: SKScene {
     
     /// Show welcome Panel with count down
     func showWelcomePanel(){
-        
-        
         if welcomeTimeLbl == nil{
             welcomeTimeLbl = SKLabelNode(text: "\(welcomeTime)")
             welcomeTimeLbl!.name = "welcomeTimeLbl"
@@ -267,8 +243,6 @@ class GameScene: SKScene {
             
         }
         addChild(welcomeTimeLbl!)
-        
-        
     }
     
     
@@ -280,7 +254,7 @@ class GameScene: SKScene {
         gameOverPanel.name = "gameOverPanel"
         gameOverPanel.position = CGPoint(x: frame.midX, y: frame.midY)
         gameOverPanel.zPosition = 10
-        gameOverPanel.color = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.6)
+        gameOverPanel.color = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.85)
         
         let gameOverLbl = SKLabelNode(text: "Game Over!")
         gameOverLbl.name = "gameOverLbl"
@@ -290,8 +264,6 @@ class GameScene: SKScene {
         gameOverLbl.position = CGPoint(x:0.0, y: 150.0)
         gameOverLbl.zPosition = 10
         gameOverPanel.addChild(gameOverLbl)
-        
-        
         
         let gameOverScore = SKLabelNode(text: "Your Score : \(Int(score))")
         gameOverScore.name = "gameOverScore"
@@ -344,13 +316,11 @@ class GameScene: SKScene {
             }
         }
         
-        
         let goBackLabel = SKSpriteNode(imageNamed: "backbtn")
         goBackLabel.name = "goBack"
         goBackLabel.position = CGPoint(x: 0.0, y: -150.0 )
         gameOverPanel.addChild(goBackLabel)
         addChild(gameOverPanel)
-        
         
     }
     
@@ -443,7 +413,6 @@ class GameScene: SKScene {
             }
             //remove the bubbles of the randomly generated indexes
             for i in removingIndex{
-                
                 if(bubbles.count > 0 && bubbles.indices.contains(i)){
                     removeBubble(bubbleName: bubbles[i].name!)
                 }
@@ -456,8 +425,6 @@ class GameScene: SKScene {
     func generateBubble(){
         
         let numberOfBalls = Int.random(in: 1...UserDefaults.standard.integer(forKey: "maximumBalls"))
-        
-        
         
         for num in 0..<numberOfBalls{
             
@@ -543,7 +510,6 @@ class GameScene: SKScene {
     ///Get Ball object for color
     func getBallTypeForColor(color: String) -> Bubble{
         for type in bubbleTypes{
-            
             if(color == type.bubbleType.lowercased()){
                 return type
             }
@@ -671,7 +637,6 @@ class GameScene: SKScene {
             index += 1
         }
         
-        
         if((index > -1) && (index < bubbles.count) && bubbles.indices.contains(index)){
             bubbles.remove(at: index)
         }
@@ -679,7 +644,6 @@ class GameScene: SKScene {
     
     ///Remove bubble from the bubbles array and from the screen according to the bubble name
     func removeBubble(bubbleName: String){
-        
         var index = 0
         for b in bubbles{
             if( b.name == bubbleName){
@@ -701,7 +665,6 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = atPoint(location)
@@ -720,8 +683,6 @@ class GameScene: SKScene {
                 
             }
         }
-        
-        
     }
     
     override func willMove(from view: SKView) {
@@ -729,5 +690,4 @@ class GameScene: SKScene {
         removeAllActions()
         removeFromParent()
     }
-    
 }

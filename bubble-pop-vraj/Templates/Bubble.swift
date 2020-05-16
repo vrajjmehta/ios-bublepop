@@ -1,11 +1,3 @@
-//
-//  Bubble.swift
-//  bubble-pop-lahirurane
-//
-//  Created by Lahiru Ranasinghe on 6/5/19.
-//  Copyright © 2019 Lahiru Ranasinghe. All rights reserved.
-//
-
 import Foundation
 
 // Model struct for the Bubble

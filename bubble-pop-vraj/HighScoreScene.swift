@@ -4,7 +4,7 @@ class HighScoreScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        backgroundColor = UIColor(red: 44/255, green: 62/255, blue: 80/255, alpha: 1.0)
+        backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         addLabels()
     }
     
@@ -17,6 +17,7 @@ class HighScoreScene: SKScene {
         highScoreLabel.position = CGPoint(x: frame.midX, y: frame.maxY - highScoreLabel.frame.size.height*2)
         addChild(highScoreLabel)
         
+        // Back button
         let goBackLabel = SKSpriteNode(imageNamed: "backbtn")
         goBackLabel.name = "goBack"
         goBackLabel.position = CGPoint(x: frame.midX, y: frame.minY + goBackLabel.frame.size.height)
@@ -24,7 +25,8 @@ class HighScoreScene: SKScene {
         
         let framePosition = frame.width / 6
         
-        let scoreIndexLbl = SKLabelNode(text: "Position")
+        // Label for Rank
+        let scoreIndexLbl = SKLabelNode(text: "Rank")
         scoreIndexLbl.name = "scoreIndexLbl"
         scoreIndexLbl.fontName = "Noteworthy-Bold"
         scoreIndexLbl.fontSize = 20.0
@@ -32,6 +34,7 @@ class HighScoreScene: SKScene {
         scoreIndexLbl.position = CGPoint(x: framePosition, y: frame.maxY - highScoreLabel.frame.size.height*3 )
         addChild(scoreIndexLbl)
         
+        // Label for Name
         let playerNameLbl = SKLabelNode(text: "Player Name")
         playerNameLbl.name = "playerNameLbl"
         playerNameLbl.fontName = "Noteworthy-Bold"
@@ -40,6 +43,7 @@ class HighScoreScene: SKScene {
         playerNameLbl.position = CGPoint(x: framePosition*3, y: frame.maxY - highScoreLabel.frame.size.height*3 )
         addChild(playerNameLbl)
         
+        // Label for Score
         let scoreLbl = SKLabelNode(text: "Score")
         scoreLbl.name = "playerNameLbl"
         scoreLbl.fontName = "Noteworthy-Bold"
@@ -58,7 +62,6 @@ class HighScoreScene: SKScene {
             if let decoded = UserDefaults.standard.object(forKey: "scoreboard") as? NSData {
                 do {
                 let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded as Data) as! [Scoreboard]
-                
                 
                 //                var userScores : [Scoreboard] = array
                 let sortedScores = array.sorted(by: { $0.playerScore > $1.playerScore })
@@ -90,12 +93,12 @@ class HighScoreScene: SKScene {
         scoreIndexValue.position = CGPoint(x: framePosition, y: headerYPosition -  CGFloat(Float((index*40))) )
         addChild(scoreIndexValue)
         
-        if(index >= 1 && index <= 3){
-            let goBackLabel = SKSpriteNode(imageNamed: "medal\(index)")
-            goBackLabel.name = "medal\(index)"
-            goBackLabel.position = CGPoint(x: framePosition*2, y:headerYPosition -  CGFloat(Float((index*38))))
-            addChild(goBackLabel)
-        }
+//        if(index >= 1 && index <= 3){
+//            let goBackLabel = SKSpriteNode(imageNamed: "medal\(index)")
+//            goBackLabel.name = "medal\(index)"
+//            goBackLabel.position = CGPoint(x: framePosition*2, y:headerYPosition -  CGFloat(Float((index*38))))
+//            addChild(goBackLabel)
+//        }
         let playerNameValue = SKLabelNode(text: "\(name)")
         playerNameValue.name = "playerNameValue_\(index)"
         playerNameValue.fontName = "Noteworthy-Bold"
@@ -126,7 +129,5 @@ class HighScoreScene: SKScene {
                 view!.presentScene(gameScene)
             }
         }
-        
-        
     }
 }
