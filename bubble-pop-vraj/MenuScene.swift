@@ -1,12 +1,3 @@
-//
-//  MenuScene.swift
-//  bubble-pop-lahirurane
-//
-//  Created by Lahiru Ranasinghe on 30/4/19.
-//  Copyright © 2019 Lahiru Ranasinghe. All rights reserved.
-//
-
-
 import SpriteKit
 import UIKit
 
@@ -14,11 +5,11 @@ class MenuScene: SKScene, UITextFieldDelegate {
     
     var highScoreText: UITextField!
     var userNameErrorLbl : SKLabelNode?
-    var themeColor = UIColor(red: 5/255, green: 61/255, blue: 86/255, alpha: 1.0)
+    var themeColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
     
     
     override func didMove(to view: SKView) {
-        backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         
         addLabels(view: view)
         addDefaults()
@@ -39,6 +30,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
         gameIcon.position = CGPoint(x: frame.midX, y: frame.maxY - 150)
         addChild(gameIcon)
       
+        // Set Label Properties for Tap to Play
         let playLabel = SKLabelNode(text: "Tap to Play!")
         playLabel.name = "startGame"
         playLabel.fontName = "Marker Felt"
@@ -49,6 +41,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
         addChild(playLabel)
         animation(label: playLabel)
         
+        // Set Label Properties for HighScore
         let highScoreLabel = SKLabelNode(text: "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))")
         highScoreLabel.name = "highScore"
         highScoreLabel.fontName = "Noteworthy-Bold"
@@ -57,22 +50,22 @@ class MenuScene: SKScene, UITextFieldDelegate {
         highScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - highScoreLabel.frame.size.height*2)
         addChild(highScoreLabel)
         
+        // Set Label Properties for RecentScores
         let recentScoreLabel = SKLabelNode(text: "Recentscore: " + "\(UserDefaults.standard.integer(forKey: "RecentScore"))")
         recentScoreLabel.name = "recent"
         recentScoreLabel.fontName = "Noteworthy-Bold"
         recentScoreLabel.fontSize = 20.0
         recentScoreLabel.fontColor = themeColor
         recentScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - recentScoreLabel.frame.size.height*5)
-        
         addChild(recentScoreLabel)
         
+        // Set Label Properties for Settings
         let settingsLabel = SKLabelNode(text: "Settings " )
         settingsLabel.name = "settings"
         settingsLabel.fontName = "Chalkduster"
         settingsLabel.fontSize = 20.0
         settingsLabel.fontColor = themeColor
         settingsLabel.position = CGPoint(x: frame.midX - 50, y: frame.minY + 100)
-        
         addChild(settingsLabel)
         
         let scoreBoard = SKLabelNode(text: "Scores" )
@@ -81,11 +74,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
         scoreBoard.fontSize = 20.0
         scoreBoard.fontColor = themeColor
         scoreBoard.position = CGPoint(x: frame.midX + 50 , y: frame.minY + 100)
-        
         addChild(scoreBoard)
-        
-        
-        
         
     }
     
@@ -93,7 +82,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
 //        UserDefaults.standard.removeObject(forKey: "scoreboard")
 //        UserDefaults.standard.removeObject(forKey: "Highscore")
         if(UserDefaults.standard.integer(forKey: "gametime") == 0){
-            
             UserDefaults.standard.set(60,forKey: "gametime")
             UserDefaults.standard.set(15,forKey: "maximumBalls")
         }
@@ -108,9 +96,8 @@ class MenuScene: SKScene, UITextFieldDelegate {
     }
     
     func showUsernameError(){
-        
         if userNameErrorLbl == nil{
-            userNameErrorLbl = SKLabelNode(text: "Player's name cannot be empty")
+            userNameErrorLbl = SKLabelNode(text: "Please Enter a valid Player Name")
             userNameErrorLbl!.name = "userNameErrorLbl"
             userNameErrorLbl!.fontName = "Marker Felt"
             userNameErrorLbl!.fontSize = 10.0

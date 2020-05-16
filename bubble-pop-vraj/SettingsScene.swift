@@ -1,11 +1,3 @@
-//
-//  SettingsScene.swift
-//  bubble-pop-lahirurane
-//
-//  Created by Lahiru Ranasinghe on 1/5/19.
-//  Copyright © 2019 Lahiru Ranasinghe. All rights reserved.
-//
-
 import SpriteKit
 
 class SettingsScene: SKScene {

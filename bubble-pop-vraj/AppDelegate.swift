@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  bubble-pop-lahirurane
-//
-//  Created by Lahiru Ranasinghe on 30/4/19.
-//  Copyright © 2019 Lahiru Ranasinghe. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
