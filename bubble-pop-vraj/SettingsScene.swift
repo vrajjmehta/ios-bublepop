@@ -11,18 +11,18 @@ class SettingsScene: SKScene {
         
         backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         
-        addLabels()
+        labelsAdd()
         loadSlider()
     }
     
-    func addLabels(){
-        let highScoreLabel = SKLabelNode(text: "Settings")
-        highScoreLabel.name = "highScore"
-        highScoreLabel.fontName = "Noteworthy-Bold"
-        highScoreLabel.fontSize = 40.0
-        highScoreLabel.fontColor = UIColor.white
-        highScoreLabel.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
-        addChild(highScoreLabel)
+    func labelsAdd(){
+        let labelHighScore = SKLabelNode(text: "Settings")
+        labelHighScore.name = "highScore"
+        labelHighScore.fontName = "Noteworthy-Bold"
+        labelHighScore.fontSize = 40.0
+        labelHighScore.fontColor = UIColor.white
+        labelHighScore.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
+        addChild(labelHighScore)
         
         
         let gameTimeLbl = SKLabelNode(text: "Game Time (sec)")
@@ -63,10 +63,10 @@ class SettingsScene: SKScene {
         }
         
         
-        let goBackLabel = SKSpriteNode(imageNamed: "backbtn")
-        goBackLabel.name = "goBack"
-        goBackLabel.position = CGPoint(x: frame.midX, y: frame.minY + 100)
-        addChild(goBackLabel)
+        let labelBack = SKSpriteNode(imageNamed: "backbtn")
+        labelBack.name = "goBack"
+        labelBack.position = CGPoint(x: frame.midX, y: frame.minY + 100)
+        addChild(labelBack)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -121,7 +121,7 @@ class SettingsScene: SKScene {
             bubbleNumberSlider?.thumbTintColor = .white
             
             bubbleNumberSlider?.maximumValue = 15
-            bubbleNumberSlider?.minimumValue = 1
+            bubbleNumberSlider?.minimumValue = 0
             bubbleNumberSlider?.setValue(Float( UserDefaults.standard.integer(forKey: "maximumBalls")), animated: true)
             
             bubbleNumberSlider?.addTarget(self, action: #selector(SettingsScene.changeMaxBubblesValue(_:)), for: .valueChanged)

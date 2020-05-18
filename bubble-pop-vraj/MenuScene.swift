@@ -4,13 +4,13 @@ import UIKit
 class MenuScene: SKScene, UITextFieldDelegate {
     
     var highScoreText: UITextField!
-    var userNameErrorLbl : SKLabelNode?
-    var themeColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+    var labelNameErr : SKLabelNode?
+    var textColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
     
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         
-        addLabels(view: view)
+        labelsAdd(view: view)
         addDefaults()
         
     }
@@ -22,7 +22,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
     //        addChild(logo)
     //    }
     
-    func addLabels(view: SKView){
+    func labelsAdd(view: SKView){
         
         let gameIcon = SKSpriteNode(imageNamed: "icon")
         gameIcon.name = "gameLogo"
@@ -34,27 +34,27 @@ class MenuScene: SKScene, UITextFieldDelegate {
         playLabel.name = "startGame"
         playLabel.fontName = "Marker Felt"
         playLabel.fontSize = 51.0
-        playLabel.fontColor = themeColor
+        playLabel.fontColor = textColor
         playLabel.position = CGPoint(x: frame.midX, y: frame.midY + 20)
         playLabel.zPosition = 10
         addChild(playLabel)
         animation(label: playLabel)
         
         // Set Label Properties for HighScore
-        let highScoreLabel = SKLabelNode(text: "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))")
-        highScoreLabel.name = "highScore"
-        highScoreLabel.fontName = "Noteworthy-Bold"
-        highScoreLabel.fontSize = 21.0
-        highScoreLabel.fontColor = themeColor
-        highScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - highScoreLabel.frame.size.height*2)
-        addChild(highScoreLabel)
+        let labelHighScore = SKLabelNode(text: "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))")
+        labelHighScore.name = "highScore"
+        labelHighScore.fontName = "Noteworthy-Bold"
+        labelHighScore.fontSize = 21.0
+        labelHighScore.fontColor = textColor
+        labelHighScore.position = CGPoint(x: frame.midX, y: frame.midY - labelHighScore.frame.size.height*2)
+        addChild(labelHighScore)
         
         // Set Label Properties for RecentScores
         let recentScoreLabel = SKLabelNode(text: "Lastscore: " + "\(UserDefaults.standard.integer(forKey: "RecentScore"))")
         recentScoreLabel.name = "recent"
         recentScoreLabel.fontName = "Noteworthy-Bold"
         recentScoreLabel.fontSize = 21.0
-        recentScoreLabel.fontColor = themeColor
+        recentScoreLabel.fontColor = textColor
         recentScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - recentScoreLabel.frame.size.height*5)
         addChild(recentScoreLabel)
         
@@ -63,7 +63,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
         settingsLabel.name = "settings"
         settingsLabel.fontName = "GillSans-SemiBoldItalic"
         settingsLabel.fontSize = 22.0
-        settingsLabel.fontColor = themeColor
+        settingsLabel.fontColor = textColor
         settingsLabel.position = CGPoint(x: frame.midX - 55, y: frame.minY + 100)
         addChild(settingsLabel)
         
@@ -72,7 +72,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
         scoreBoard.name = "scoreBoard"
         scoreBoard.fontName = "GillSans-SemiBoldItalic"
         scoreBoard.fontSize = 22.0
-        scoreBoard.fontColor = themeColor
+        scoreBoard.fontColor = textColor
         scoreBoard.position = CGPoint(x: frame.midX + 55 , y: frame.minY + 100)
         addChild(scoreBoard)
         
@@ -95,14 +95,14 @@ class MenuScene: SKScene, UITextFieldDelegate {
     }
     
     func showUsernameError(){
-        if userNameErrorLbl == nil{
-            userNameErrorLbl = SKLabelNode(text: "Please Enter a valid Player Name")
-            userNameErrorLbl!.name = "userNameErrorLbl"
-            userNameErrorLbl!.fontName = "Marker Felt"
-            userNameErrorLbl!.fontSize = 10.0
-            userNameErrorLbl!.fontColor = UIColor.red
-            userNameErrorLbl!.position = CGPoint(x: frame.midX, y: frame.midY)
-            addChild(userNameErrorLbl!)
+        if labelNameErr == nil{
+            labelNameErr = SKLabelNode(text: "Please Enter a valid Player Name")
+            labelNameErr!.name = "labelNameErr"
+            labelNameErr!.fontName = "Marker Felt"
+            labelNameErr!.fontSize = 10.0
+            labelNameErr!.fontColor = UIColor.red
+            labelNameErr!.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(labelNameErr!)
         }
     }
     
@@ -131,7 +131,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
                     GameSettings.username = "\(textField.text!)"
                    
                     if(GameSettings.username != ""){
-                        self.userNameErrorLbl?.removeFromParent()
+                        self.labelNameErr?.removeFromParent()
                         let gameScene = GameScene(size: self.view!.bounds.size)
                         self.view!.presentScene(gameScene)
                     }else{

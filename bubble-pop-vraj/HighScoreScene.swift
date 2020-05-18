@@ -5,54 +5,54 @@ class HighScoreScene: SKScene {
     override func didMove(to view: SKView) {
         
         backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        addLabels()
+        labelsAdd()
     }
     
-    func addLabels(){
-        let highScoreLabel = SKLabelNode(text: "HighScore  ")
-        highScoreLabel.name = "highScore"
-        highScoreLabel.fontName = "Noteworthy-Bold"
-        highScoreLabel.fontSize = 40.0
-        highScoreLabel.fontColor = UIColor.white
-        highScoreLabel.position = CGPoint(x: frame.midX, y: frame.maxY - highScoreLabel.frame.size.height*2)
-        addChild(highScoreLabel)
+    func labelsAdd(){
+        let labelHighScore = SKLabelNode(text: "HighScore  ")
+        labelHighScore.name = "highScore"
+        labelHighScore.fontName = "Noteworthy-Bold"
+        labelHighScore.fontSize = 40.0
+        labelHighScore.fontColor = UIColor.white
+        labelHighScore.position = CGPoint(x: frame.midX, y: frame.maxY - labelHighScore.frame.size.height*2)
+        addChild(labelHighScore)
         
         // Back button
-        let goBackLabel = SKSpriteNode(imageNamed: "backbtn")
-        goBackLabel.name = "goBack"
-        goBackLabel.position = CGPoint(x: frame.midX, y: frame.minY + goBackLabel.frame.size.height)
-        addChild(goBackLabel)
+        let labelBack = SKSpriteNode(imageNamed: "backbtn")
+        labelBack.name = "goBack"
+        labelBack.position = CGPoint(x: frame.midX, y: frame.minY + labelBack.frame.size.height)
+        addChild(labelBack)
         
         let framePosition = frame.width / 6
         
         // Label for Rank
-        let scoreIndexLbl = SKLabelNode(text: "Rank")
-        scoreIndexLbl.name = "scoreIndexLbl"
-        scoreIndexLbl.fontName = "Noteworthy-Bold"
-        scoreIndexLbl.fontSize = 20.0
-        scoreIndexLbl.fontColor = UIColor.white
-        scoreIndexLbl.position = CGPoint(x: framePosition, y: frame.maxY - highScoreLabel.frame.size.height*3 )
-        addChild(scoreIndexLbl)
+        let labelScoreIndex = SKLabelNode(text: "Rank")
+        labelScoreIndex.name = "labelScoreIndex"
+        labelScoreIndex.fontName = "Noteworthy-Bold"
+        labelScoreIndex.fontSize = 20.0
+        labelScoreIndex.fontColor = UIColor.white
+        labelScoreIndex.position = CGPoint(x: framePosition, y: frame.maxY - labelHighScore.frame.size.height*3 )
+        addChild(labelScoreIndex)
         
         // Label for Name
-        let playerNameLbl = SKLabelNode(text: "Player Name")
-        playerNameLbl.name = "playerNameLbl"
-        playerNameLbl.fontName = "Noteworthy-Bold"
-        playerNameLbl.fontSize = 20.0
-        playerNameLbl.fontColor = UIColor.white
-        playerNameLbl.position = CGPoint(x: framePosition*3, y: frame.maxY - highScoreLabel.frame.size.height*3 )
-        addChild(playerNameLbl)
+        let labelPlayerName = SKLabelNode(text: "Player Name")
+        labelPlayerName.name = "labelPlayerName"
+        labelPlayerName.fontName = "Noteworthy-Bold"
+        labelPlayerName.fontSize = 20.0
+        labelPlayerName.fontColor = UIColor.white
+        labelPlayerName.position = CGPoint(x: framePosition*3, y: frame.maxY - labelHighScore.frame.size.height*3 )
+        addChild(labelPlayerName)
         
         // Label for Score
         let scoreLbl = SKLabelNode(text: "Score")
-        scoreLbl.name = "playerNameLbl"
+        scoreLbl.name = "labelPlayerName"
         scoreLbl.fontName = "Noteworthy-Bold"
         scoreLbl.fontSize = 20.0
         scoreLbl.fontColor = UIColor.white
-        scoreLbl.position = CGPoint(x: framePosition*5, y: frame.maxY - highScoreLabel.frame.size.height*3 )
+        scoreLbl.position = CGPoint(x: framePosition*5, y: frame.maxY - labelHighScore.frame.size.height*3 )
         addChild(scoreLbl)
         
-        let headerYPosition = frame.maxY - highScoreLabel.frame.size.height*4
+        let headerYPosition = frame.maxY - labelHighScore.frame.size.height*4
         //get current string for scoreboard
         let currentScoreBoardObj = UserDefaults.standard.object(forKey: "scoreboard")
         
@@ -94,10 +94,10 @@ class HighScoreScene: SKScene {
         addChild(scoreIndexValue)
         
 //        if(index >= 1 && index <= 3){
-//            let goBackLabel = SKSpriteNode(imageNamed: "medal\(index)")
-//            goBackLabel.name = "medal\(index)"
-//            goBackLabel.position = CGPoint(x: framePosition*2, y:headerYPosition -  CGFloat(Float((index*38))))
-//            addChild(goBackLabel)
+//            let labelBack = SKSpriteNode(imageNamed: "medal\(index)")
+//            labelBack.name = "medal\(index)"
+//            labelBack.position = CGPoint(x: framePosition*2, y:headerYPosition -  CGFloat(Float((index*38))))
+//            addChild(labelBack)
 //        }
         let playerNameValue = SKLabelNode(text: "\(name)")
         playerNameValue.name = "playerNameValue_\(index)"
