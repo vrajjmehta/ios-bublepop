@@ -82,7 +82,7 @@ class GameScene: SKScene {
         gameTime = UserDefaults.standard.integer(forKey: "gametime")
         highScore = UserDefaults.standard.integer(forKey: "Highscore")
         updateTimer()
-        createBubble()
+        generateNewBubble()
     }
     
     ///
@@ -193,7 +193,7 @@ class GameScene: SKScene {
     @objc func gameTimeUpdate(){
         if(timerCount % Int(refreshRate) == 0 ){
             removeRandomBubbles()
-            createBubble()
+            generateNewBubble()
         }
         timerCount += 1
         
@@ -358,7 +358,7 @@ class GameScene: SKScene {
         timeLeftLbl.name = "timeLeftLbl"
         timeLeftLbl.fontName = "Chalkduster"
         timeLeftLbl.fontSize = 15.0
-        timeLeftLbl.fontColor = UIColor.white
+        timeLeftLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         timeLeftLbl.zPosition = 5
         timeLeftLbl.position = CGPoint(x: framePosition, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
         addChild(timeLeftLbl)
@@ -368,7 +368,7 @@ class GameScene: SKScene {
             timeLeftVal!.name = "timeLeftVal"
             timeLeftVal!.fontName = "Marker Felt"
             timeLeftVal!.fontSize = 25.0
-            timeLeftVal!.fontColor = UIColor.white
+            timeLeftVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             timeLeftVal!.zPosition = 5
             timeLeftVal!.position = CGPoint(x:framePosition, y: frame.maxY - timeLeftLbl.frame.size.height*6 )
             addChild(timeLeftVal!)
@@ -378,7 +378,7 @@ class GameScene: SKScene {
         scoreLbl.name = "scoreLbl"
         scoreLbl.fontName = "Chalkduster"
         scoreLbl.fontSize = 15.0
-        scoreLbl.fontColor = UIColor.white
+        scoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         scoreLbl.zPosition = 5
         scoreLbl.position = CGPoint(x: framePosition*3, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
         addChild(scoreLbl)
@@ -388,7 +388,7 @@ class GameScene: SKScene {
             scoreLblVal!.name = "scoreLblVal"
             scoreLblVal!.fontName = "Marker Felt"
             scoreLblVal!.fontSize = 25.0
-            scoreLblVal!.fontColor = UIColor.white
+            scoreLblVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             scoreLblVal!.zPosition = 5
             scoreLblVal!.position = CGPoint(x: framePosition*3, y: frame.maxY - timeLeftLbl.frame.size.height*6)
             addChild(scoreLblVal!)
@@ -398,7 +398,7 @@ class GameScene: SKScene {
         highScoreLbl.name = "scoreLbl"
         highScoreLbl.fontName = "Chalkduster"
         highScoreLbl.fontSize = 15.0
-        highScoreLbl.fontColor = UIColor.white
+        highScoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         highScoreLbl.zPosition = 5
         highScoreLbl.position = CGPoint(x: framePosition*5, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
         addChild(highScoreLbl)
@@ -408,7 +408,7 @@ class GameScene: SKScene {
             highScoreVal!.name = "highScoreVal"
             highScoreVal!.fontName = "Marker Felt"
             highScoreVal!.fontSize = 25.0
-            highScoreVal!.fontColor = UIColor.white
+            highScoreVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             highScoreVal!.zPosition = 5
             highScoreVal!.position = CGPoint(x: framePosition*5, y: frame.maxY - timeLeftLbl.frame.size.height*6 )
             addChild(highScoreVal!)
@@ -448,22 +448,21 @@ class GameScene: SKScene {
            return Bubble(bubbleType: "Red", bubbleValue: 1, bubbleImgName: "bubble-pink")
        }
     
-    /// Remove random bubbles from the screen
-    /// Determines which bubbles to remove
+    // Choose and remove a random bubble
     func removeRandomBubbles(){
         
         if(bubbles.count > 5){
             
             //get number of bubbles to remove
-            let numberOfRemoving = Int.random(in: 0...5)
+            let noToRemove = Int.random(in: 0...5)
             
-            var removingIndex: [Int] = []
+            var removeIndex: [Int] = []
             //get random Indexes for remove bubbles
-            for _ in 0...numberOfRemoving{
-                removingIndex.append(Int.random(in: 0...bubbles.count))
+            for _ in 0...noToRemove{
+                removeIndex.append(Int.random(in: 0...bubbles.count))
             }
             //remove the bubbles of the randomly generated indexes
-            for i in removingIndex{
+            for i in removeIndex{
                 if(bubbles.count > 0 && bubbles.indices.contains(i)){
                     removeBubble(bubbleName: bubbles[i].name!)
                 }
@@ -472,114 +471,115 @@ class GameScene: SKScene {
         }
     }
     
-    /// Generates new random bubbles and add to the screen
-    func createBubble(){
+    // Generate new bubble and add it to the Game Screen
+    func generateNewBubble(){
         
-        let numberOfBalls = Int.random(in: 0...UserDefaults.standard.integer(forKey: "maximumBalls"))
+        let numberOfBubbles = Int.random(in: 0...UserDefaults.standard.integer(forKey: "maximumBalls"))
         
-        for num in 0..<numberOfBalls{
+        for num in 0..<numberOfBubbles{
             
-            let randomX = Double.random(in: Double(frame.minX+70)...Double(frame.maxX-70))
-            let randomY = Double.random(in: Double(frame.minY+100)...Double(frame.maxY-200))
-            let type = getRandomBubbleType()
-            let ball = SKSpriteNode(imageNamed: type.getBubbleImgName())
-            ball.size = CGSize(width: 70, height: 70)
-            let timeInMiliSecDate = Date()
-            let timeInMiliSec = Int (timeInMiliSecDate.timeIntervalSince1970 * 1000)
+            // Randomly select pixel location for the bubble to be created
+            let randomPixelX = Double.random(in: Double(frame.minX+70)...Double(frame.maxX-70))
+            let randomPixelY = Double.random(in: Double(frame.minY+100)...Double(frame.maxY-200))
+            let bubbleType = getRandomBubbleType()
+            let bubble = SKSpriteNode(imageNamed: bubbleType.getBubbleImgName())
+            bubble.size = CGSize(width: 70, height: 70)
+            let miliSecDate = Date()
+            let timeInMiliSec = Int (miliSecDate.timeIntervalSince1970 * 1000)
             
-            ball.name = "Ball_\(num)_\(type)_\(timeInMiliSec)"
-            ball.position = CGPoint(x:randomX, y: randomY)
-            ball.zPosition = ZPositions.ball
-            ball.physicsBody?.categoryBitMask = PhysicsCategories.ballCategory
-            ball.physicsBody?.collisionBitMask = PhysicsCategories.ballCategory
+            bubble.name = "Ball_\(num)_\(bubbleType)_\(timeInMiliSec)"
+            bubble.position = CGPoint(x:randomPixelX, y: randomPixelY)
+            bubble.zPosition = ZPositions.ball
+            bubble.physicsBody?.categoryBitMask = PhysicsCategories.ballCategory
+            bubble.physicsBody?.collisionBitMask = PhysicsCategories.ballCategory
             
-            ball.physicsBody = SKPhysicsBody(rectangleOf: ball.size)
-            ball.physicsBody?.isDynamic = true
-            ball.physicsBody?.affectedByGravity = false;
-            ball.physicsBody?.categoryBitMask = PhysicsCategories.ballCategory
-            ball.physicsBody?.contactTestBitMask = PhysicsCategories.ballCategory
-            ball.physicsBody?.applyImpulse(CGVector(dx: 100.0, dy: 100.0))
-            ball.alpha = 0.0
+            bubble.physicsBody = SKPhysicsBody(rectangleOf: bubble.size)
+            bubble.physicsBody?.isDynamic = true
+            bubble.physicsBody?.affectedByGravity = false;
+            bubble.physicsBody?.categoryBitMask = PhysicsCategories.ballCategory
+            bubble.physicsBody?.contactTestBitMask = PhysicsCategories.ballCategory
+            bubble.physicsBody?.applyImpulse(CGVector(dx: 100.0, dy: 100.0))
+            bubble.alpha = 0.0
             
-            ball.physicsBody?.usesPreciseCollisionDetection = true;
+            bubble.physicsBody?.usesPreciseCollisionDetection = true;
             
 
-            if isValidBubbleLocation(newBubble: ball) {
-                bubbles.append(ball)
+            if checkOverlapBubble(nextBubble: bubble) {
+                bubbles.append(bubble)
                 
-                let durationPercentage = ((gameTime*100) / (UserDefaults.standard.integer(forKey: "gametime")))
-                var xPos = Double.random(in: -1000.0...1000.0)
-                var yPos = Double.random(in: -1000.0...1000.0)
+                let durationPerc = ((gameTime*100) / (UserDefaults.standard.integer(forKey: "gametime")))
+                var pixelX = Double.random(in: -1000.0...1000.0)
+                var pixelY = Double.random(in: -1000.0...1000.0)
                 
-                if(durationPercentage > 25 && durationPercentage < 35){
-                    xPos = Double.random(in: -1000.0...1000.0)
-                    yPos = Double.random(in: -1000.0...1000.0)
-                }else if(durationPercentage > 10 && durationPercentage < 25){
-                    xPos = Double.random(in: -800.0...800.0)
-                    yPos = Double.random(in: -800.0...800.0)
-                }else if(durationPercentage < 10){
-                    xPos = Double.random(in: -100.0...100.0)
-                    yPos = Double.random(in: -100.0...100.0)
+                if(durationPerc > 25 && durationPerc < 35){
+                    pixelX = Double.random(in: -1000.0...1000.0)
+                    pixelY = Double.random(in: -1000.0...1000.0)
+                }else if(durationPerc > 10 && durationPerc < 25){
+                    pixelX = Double.random(in: -800.0...800.0)
+                    pixelY = Double.random(in: -800.0...800.0)
+                }else if(durationPerc < 10){
+                    pixelX = Double.random(in: -100.0...100.0)
+                    pixelY = Double.random(in: -100.0...100.0)
                 }
                 
-                addChild(ball)
-                ball.run(SKAction.fadeIn(withDuration: 0.10))
-                ball.run(SKAction.move(by: CGVector(dx: xPos, dy: yPos), duration: TimeInterval(gameTime)))
+                addChild(bubble)
+                bubble.run(SKAction.fadeIn(withDuration: 0.10))
+                bubble.run(SKAction.move(by: CGVector(dx: pixelX, dy: pixelY), duration: TimeInterval(gameTime)))
             }
         }
     }
     
-    /// Validate whether the new bubble intersects with any current bubbles
-    func isValidBubbleLocation(newBubble: SKSpriteNode) -> Bool{
-        for b in bubbles{
-            if(b.intersects(newBubble)){
+    // Check if the bubble does not overlap with other bubbles
+    func checkOverlapBubble(nextBubble: SKSpriteNode) -> Bool{
+        for bubble in bubbles{
+            if(bubble.intersects(nextBubble)){
                 return false
             }
         }
         return true
     }
     
-    /// Handles when user press a bubble
-    func handlePopedBall(ball :SKSpriteNode){
+    // Function to handle events when a bubble is popped
+    func handlePopedBall(bubble :SKSpriteNode){
         
-        ball.removeAllActions()
-        let poppedBubbleType = getBallType(bubbleNode: ball)
-        let poppedScore = calcualteScore(poppedBall: ball, poppedBubbleType: poppedBubbleType)
-        let poppedBallScore = SKLabelNode(text: "+\(poppedScore)")
+        bubble.removeAllActions()
+        let poppedBubbleType = getBallType(bubbleNode: bubble)
+        let bubbleScore = calculateScore(poppedBall: bubble, poppedBubbleType: poppedBubbleType)
+        let poppedBubbleScore = SKLabelNode(text: "+\(bubbleScore)")
         
-        poppedBallScore.name = "poppedBallScore"
-        poppedBallScore.fontName = "Chalkduster"
-        poppedBallScore.fontSize = 20.0
-        poppedBallScore.fontColor = getUIColor(strColor: poppedBubbleType.bubbleType)
-        poppedBallScore.zPosition = 5
-        poppedBallScore.position = CGPoint(x: ball.frame.maxX - 50, y: ball.frame.maxY - 50)
-        addChild(poppedBallScore)
-        poppedBallScore.run(SKAction.fadeOut(withDuration: 1.0),completion: {
-            poppedBallScore.removeFromParent()
+        poppedBubbleScore.name = "poppedBubbleScore"
+        poppedBubbleScore.fontName = "Chalkduster"
+        poppedBubbleScore.fontSize = 20.0
+        poppedBubbleScore.fontColor = getUIColor(strColor: poppedBubbleType.bubbleType)
+        poppedBubbleScore.zPosition = 5
+        poppedBubbleScore.position = CGPoint(x: bubble.frame.maxX - 50, y: bubble.frame.maxY - 50)
+        addChild(poppedBubbleScore)
+        poppedBubbleScore.run(SKAction.fadeOut(withDuration: 1.0),completion: {
+            poppedBubbleScore.removeFromParent()
         })
         
-        ball.alpha = 0.4
-        ball.run(animateBall, completion: {
-            ball.run(SKAction.sequence(
+        bubble.alpha = 0.45
+        bubble.run(animateBall, completion: {
+            bubble.run(SKAction.sequence(
                 [
                     SKAction.move(to: self.scoreLblVal!.position,duration:0.50),
                     SKAction.scale(to: 0.0, duration: 0.50)
                 ]
             ),completion:{
-                ball.removeFromParent()
+                bubble.removeFromParent()
             })
             
             
         })
         
-        removeBubble(bubble: ball)
+        removeBubble(bubble: bubble)
         
-        ball.physicsBody?.categoryBitMask = PhysicsCategories.poppedBall
-        ball.physicsBody?.collisionBitMask = PhysicsCategories.poppedBall
-        ball.physicsBody?.categoryBitMask = PhysicsCategories.poppedBall
-        ball.physicsBody?.contactTestBitMask = PhysicsCategories.poppedBall
-        ball.physicsBody?.collisionBitMask = PhysicsCategories.poppedBall
-        ball.zPosition = ZPositions.poppedBall
+        bubble.physicsBody?.categoryBitMask = PhysicsCategories.poppedBall
+        bubble.physicsBody?.collisionBitMask = PhysicsCategories.poppedBall
+        bubble.physicsBody?.categoryBitMask = PhysicsCategories.poppedBall
+        bubble.physicsBody?.contactTestBitMask = PhysicsCategories.poppedBall
+        bubble.physicsBody?.collisionBitMask = PhysicsCategories.poppedBall
+        bubble.zPosition = ZPositions.poppedBall
         
         scoreLblVal!.text = "\(Int(score))"
         scoreLblVal!.run(animateScore)
@@ -588,42 +588,25 @@ class GameScene: SKScene {
         
     }
     
-    
-    ///Calculate popped bubbles score
-    func calcualteScore(poppedBall: SKSpriteNode, poppedBubbleType: Bubble) -> Double{
-        //var bonus = 0.0
-        var totalGained = Double(poppedBubbleType.getBubbleValue())
-        
-        if(previousPoppedType != nil && previousPoppedType!.getBubbleType() == poppedBubbleType.getBubbleType()){
-            totalGained = totalGained * 1.5
-        }
-        
-        score = score + totalGained
-        previousPoppedType = poppedBubbleType
-        
-        return totalGained
-        
-    }
-    
-    /// Get ball object according to the SKSriteNode name
+    // Return ball type in the SkScrite Node
     func getBallType(bubbleNode: SKSpriteNode) -> Bubble{
-        var returnBubble: Bubble?
+        var ballType: Bubble?
         for type in bubbleTypes{
             
             if((bubbleNode.name)!.contains(type.bubbleType.lowercased())){
-                returnBubble =  type
+                ballType =  type
             }
         }
         
-        return returnBubble!
+        return ballType!
         
     }
     
-    ///Remove bubble from the screen
+    // Remove a bubble on the screen
     func removeBubble(bubble: SKSpriteNode){
         var index = 0
-        for b in bubbles{
-            if( b.name == bubble.name){
+        for bubble in bubbles{
+            if( bubble.name == bubble.name){
                 break
             }
             index += 1
@@ -634,12 +617,11 @@ class GameScene: SKScene {
         }
     }
     
-    ///Remove bubble from the bubbles array and from the screen according to the bubble name
+    // Remove a bubble from the array and the screen
     func removeBubble(bubbleName: String){
         var index = 0
-        for b in bubbles{
-            if( b.name == bubbleName){
-                
+        for bubble in bubbles{
+            if( bubble.name == bubbleName){
                 break
             }
             index += 1
@@ -655,6 +637,21 @@ class GameScene: SKScene {
         }
     }
     
+   // Calculate the score after each bubble is popped, also the bonus points
+    func calculateScore(poppedBall: SKSpriteNode, poppedBubbleType: Bubble) -> Double{
+        //var bonus = 0.0
+        var bonus = Double(poppedBubbleType.getBubbleValue())
+        
+        if(previousPoppedType != nil && previousPoppedType!.getBubbleType() == poppedBubbleType.getBubbleType()){
+            bonus = bonus * 1.5
+        }
+        
+        score = score + bonus
+        previousPoppedType = poppedBubbleType
+        
+        return bonus
+        
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
@@ -671,7 +668,7 @@ class GameScene: SKScene {
                 view!.presentScene(gameScene)
             }else if(touchNodeName.contains("Ball") && !isGameOver){
                 // Captures when user presses a bubble
-                handlePopedBall(ball: touchedNode as! SKSpriteNode)
+                handlePopedBall(bubble: touchedNode as! SKSpriteNode)
                 
             }
         }

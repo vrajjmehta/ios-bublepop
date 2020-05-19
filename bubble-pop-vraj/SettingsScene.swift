@@ -20,7 +20,7 @@ class SettingsScene: SKScene {
         labelHighScore.name = "highScore"
         labelHighScore.fontName = "Noteworthy-Bold"
         labelHighScore.fontSize = 40.0
-        labelHighScore.fontColor = UIColor.white
+        labelHighScore.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         labelHighScore.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
         addChild(labelHighScore)
         
@@ -29,7 +29,7 @@ class SettingsScene: SKScene {
         gameTimeLbl.name = "gameTimeLbl"
         gameTimeLbl.fontName = "Noteworthy-Bold"
         gameTimeLbl.fontSize = 20.0
-        gameTimeLbl.fontColor = UIColor.white
+        gameTimeLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         gameTimeLbl.position = CGPoint(x: frame.midX, y: frame.midY + 120)
         addChild(gameTimeLbl)
         
@@ -38,7 +38,7 @@ class SettingsScene: SKScene {
             gameTimeValueLbl?.name = "gameTimeValueLbl"
             gameTimeValueLbl?.fontName = "Noteworthy-Bold"
             gameTimeValueLbl?.fontSize = 20.0
-            gameTimeValueLbl?.fontColor = UIColor.white
+            gameTimeValueLbl?.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             gameTimeValueLbl?.position = CGPoint(x: frame.midX, y: frame.midY + 50)
             addChild(gameTimeValueLbl!)
         }
@@ -48,7 +48,7 @@ class SettingsScene: SKScene {
         maxBubblesLbl.name = "maxBubblesLbl"
         maxBubblesLbl.fontName = "Noteworthy-Bold"
         maxBubblesLbl.fontSize = 20.0
-        maxBubblesLbl.fontColor = UIColor.white
+        maxBubblesLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         maxBubblesLbl.position = CGPoint(x: frame.midX, y: frame.midY - 50)
         addChild(maxBubblesLbl)
         
@@ -57,7 +57,7 @@ class SettingsScene: SKScene {
             bubbleValueLbl?.name = "bubbleValueLbl"
             bubbleValueLbl?.fontName = "Noteworthy-Bold"
             bubbleValueLbl?.fontSize = 20.0
-            bubbleValueLbl?.fontColor = UIColor.white
+            bubbleValueLbl?.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             bubbleValueLbl?.position = CGPoint(x: frame.midX, y: frame.midY - 150)
             addChild(bubbleValueLbl!)
         }
@@ -96,7 +96,7 @@ class SettingsScene: SKScene {
             
             gameTimeSlider?.minimumTrackTintColor = .red
             gameTimeSlider?.maximumTrackTintColor = .red
-            gameTimeSlider?.thumbTintColor = .white
+            gameTimeSlider?.thumbTintColor = .init(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             
             gameTimeSlider?.maximumValue = 180
             gameTimeSlider?.minimumValue = 5
@@ -118,7 +118,7 @@ class SettingsScene: SKScene {
             
             bubbleNumberSlider?.minimumTrackTintColor = .red
             bubbleNumberSlider?.maximumTrackTintColor = .red
-            bubbleNumberSlider?.thumbTintColor = .white
+            bubbleNumberSlider?.thumbTintColor = .init(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
             
             bubbleNumberSlider?.maximumValue = 15
             bubbleNumberSlider?.minimumValue = 0

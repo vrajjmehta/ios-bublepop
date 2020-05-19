@@ -13,7 +13,7 @@ class HighScoreScene: SKScene {
         labelHighScore.name = "highScore"
         labelHighScore.fontName = "Noteworthy-Bold"
         labelHighScore.fontSize = 40.0
-        labelHighScore.fontColor = UIColor.white
+        labelHighScore.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         labelHighScore.position = CGPoint(x: frame.midX, y: frame.maxY - labelHighScore.frame.size.height*2)
         addChild(labelHighScore)
         
@@ -30,7 +30,7 @@ class HighScoreScene: SKScene {
         labelScoreIndex.name = "labelScoreIndex"
         labelScoreIndex.fontName = "Noteworthy-Bold"
         labelScoreIndex.fontSize = 20.0
-        labelScoreIndex.fontColor = UIColor.white
+        labelScoreIndex.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         labelScoreIndex.position = CGPoint(x: framePosition, y: frame.maxY - labelHighScore.frame.size.height*3 )
         addChild(labelScoreIndex)
         
@@ -39,7 +39,7 @@ class HighScoreScene: SKScene {
         labelPlayerName.name = "labelPlayerName"
         labelPlayerName.fontName = "Noteworthy-Bold"
         labelPlayerName.fontSize = 20.0
-        labelPlayerName.fontColor = UIColor.white
+        labelPlayerName.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         labelPlayerName.position = CGPoint(x: framePosition*3, y: frame.maxY - labelHighScore.frame.size.height*3 )
         addChild(labelPlayerName)
         
@@ -48,7 +48,7 @@ class HighScoreScene: SKScene {
         scoreLbl.name = "labelPlayerName"
         scoreLbl.fontName = "Noteworthy-Bold"
         scoreLbl.fontSize = 20.0
-        scoreLbl.fontColor = UIColor.white
+        scoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         scoreLbl.position = CGPoint(x: framePosition*5, y: frame.maxY - labelHighScore.frame.size.height*3 )
         addChild(scoreLbl)
         
