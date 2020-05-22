@@ -1,3 +1,9 @@
+// --------Important INFO--------------
+//This project is programmed using SpriteKit & GamePlayKit
+//There are No Standard View Controllers as such, various "Scenes" make up the View Controller
+//Also, In Storyboard you wont be able to see different views
+//The views are dynamically created using SprikeKit
+
 import SpriteKit
 
 class SettingsScene: SKScene {
@@ -8,9 +14,7 @@ class SettingsScene: SKScene {
     var bubbleValueLbl: SKLabelNode?
     
     override func didMove(to view: SKView) {
-        
         backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        
         labelsAdd()
         loadSlider()
     }
@@ -23,7 +27,6 @@ class SettingsScene: SKScene {
         labelHighScore.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
         labelHighScore.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
         addChild(labelHighScore)
-        
         
         let gameTimeLbl = SKLabelNode(text: "Game Time (sec)")
         gameTimeLbl.name = "gameTimeLbl"
@@ -43,7 +46,6 @@ class SettingsScene: SKScene {
             addChild(gameTimeValueLbl!)
         }
         
-        
         let maxBubblesLbl = SKLabelNode(text: "Max Bubbles")
         maxBubblesLbl.name = "maxBubblesLbl"
         maxBubblesLbl.fontName = "Noteworthy-Bold"
@@ -62,7 +64,6 @@ class SettingsScene: SKScene {
             addChild(bubbleValueLbl!)
         }
         
-        
         let labelBack = SKSpriteNode(imageNamed: "backbtn")
         labelBack.name = "goBack"
         labelBack.position = CGPoint(x: frame.midX, y: frame.minY + 100)
@@ -70,29 +71,22 @@ class SettingsScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = atPoint(location)
             
             if touchedNode.name == "goBack" {
-                
-                let gameScene = MenuScene(size: view!.bounds.size)
+                let gameScene = MainScreen(size: view!.bounds.size)
                 view!.presentScene(gameScene)
             }
         }
-        
-        
     }
     
     func loadSlider() {
-        
         if(gameTimeSlider == nil){
             gameTimeSlider = UISlider()
             
-            
             gameTimeSlider?.frame = CGRect(x: frame.minX + ((frame.width - 250) / 2), y: frame.midY - 100, width: 250, height: 35)
-            
             
             gameTimeSlider?.minimumTrackTintColor = .red
             gameTimeSlider?.maximumTrackTintColor = .red
@@ -103,18 +97,12 @@ class SettingsScene: SKScene {
             gameTimeSlider?.setValue(Float(UserDefaults.standard.integer(forKey: "gametime")), animated: true)
             
             gameTimeSlider?.addTarget(self, action: #selector(SettingsScene.changeGameTimerValue(_:)), for: .valueChanged)
-            
-            
-            
             view?.addSubview(gameTimeSlider!)
         }
         
         if(bubbleNumberSlider == nil){
             bubbleNumberSlider = UISlider()
-            
-            
             bubbleNumberSlider?.frame = CGRect(x: frame.minX + ((frame.width - 250) / 2), y: frame.midY + 100, width: 250, height: 35)
-            
             
             bubbleNumberSlider?.minimumTrackTintColor = .red
             bubbleNumberSlider?.maximumTrackTintColor = .red
@@ -125,37 +113,26 @@ class SettingsScene: SKScene {
             bubbleNumberSlider?.setValue(Float( UserDefaults.standard.integer(forKey: "maximumBalls")), animated: true)
             
             bubbleNumberSlider?.addTarget(self, action: #selector(SettingsScene.changeMaxBubblesValue(_:)), for: .valueChanged)
-            
-            
-            
             view?.addSubview(bubbleNumberSlider!)
         }
-        
-        
     }
     
     @objc func changeGameTimerValue(_ sender: UISlider){
-        
         let value = Int(sender.value)
         let updatedTime = (value) - (value % 5)
         gameTimeSlider?.setValue(Float(updatedTime), animated: true)
         UserDefaults.standard.set(updatedTime,forKey: "gametime")
         gameTimeValueLbl?.text = String(updatedTime)
-        
-        
     }
     
     @objc func changeMaxBubblesValue(_ sender: UISlider){
-        
         let updatedMaxBubbles = Int(sender.value)
         UserDefaults.standard.set(updatedMaxBubbles,forKey: "maximumBalls")
         bubbleValueLbl?.text = String(updatedMaxBubbles)
-        
     }
     
     
     override func willMove(from view: SKView) {
-        
         gameTimeSlider!.removeFromSuperview()
         bubbleNumberSlider!.removeFromSuperview()
     }

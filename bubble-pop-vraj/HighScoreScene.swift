@@ -1,9 +1,14 @@
+// --------Important INFO--------------
+//This project is programmed using SpriteKit & GamePlayKit
+//There are No Standard View Controllers as such, various "Scenes" make up the View Controller
+//Also, In Storyboard you wont be able to see different views
+//The views are dynamically created using SprikeKit
+
 import SpriteKit
 
 class HighScoreScene: SKScene {
     
     override func didMove(to view: SKView) {
-        
         backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         labelsAdd()
     }
@@ -57,8 +62,6 @@ class HighScoreScene: SKScene {
         let currentScoreBoardObj = UserDefaults.standard.object(forKey: "scoreboard")
         
         if(currentScoreBoardObj != nil){
-            
-            
             if let decoded = UserDefaults.standard.object(forKey: "scoreboard") as? NSData {
                 do {
                 let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded as Data) as! [Scoreboard]
@@ -78,9 +81,7 @@ class HighScoreScene: SKScene {
                     print("Error in Loading scoreboard data")
                 }
             }
-            
         }
-        
     }
     
     func generateLabelsForScore(index: Int, name: String, score: Int, headerYPosition: CGFloat){
@@ -92,13 +93,7 @@ class HighScoreScene: SKScene {
         scoreIndexValue.fontColor = UIColor.white
         scoreIndexValue.position = CGPoint(x: framePosition, y: headerYPosition -  CGFloat(Float((index*40))) )
         addChild(scoreIndexValue)
-        
-//        if(index >= 1 && index <= 3){
-//            let labelBack = SKSpriteNode(imageNamed: "medal\(index)")
-//            labelBack.name = "medal\(index)"
-//            labelBack.position = CGPoint(x: framePosition*2, y:headerYPosition -  CGFloat(Float((index*38))))
-//            addChild(labelBack)
-//        }
+
         let playerNameValue = SKLabelNode(text: "\(name)")
         playerNameValue.name = "playerNameValue_\(index)"
         playerNameValue.fontName = "Noteworthy-Bold"
@@ -125,7 +120,7 @@ class HighScoreScene: SKScene {
             
             if touchedNode.name == "goBack" {
                 
-                let gameScene = MenuScene(size: view!.bounds.size)
+                let gameScene = MainScreen(size: view!.bounds.size)
                 view!.presentScene(gameScene)
             }
         }

@@ -1,3 +1,9 @@
+// --------Important INFO--------------
+//This project is programmed using SpriteKit & GamePlayKit
+//There are No Standard View Controllers as such, various "Scenes" make up the View Controller
+//Also, In Storyboard you wont be able to see different views
+//The views are dynamically created using SprikeKit
+
 import Foundation
 
 import SpriteKit
@@ -18,9 +24,9 @@ enum GameSettings{
     //    static var gameTime: Int = UserDefaults.
     //    static var maximumBalls: Int = 30
     static var username: String = ""
-    
 }
 
+// Defint the score for each bubble based on color
 enum BubbleTypeScore{
     static let Red: Int = 1
     static let Pink: Int = 2
@@ -28,6 +34,3 @@ enum BubbleTypeScore{
     static let Blue: Int = 8
     static let Black: Int = 10
 }
-
-
-

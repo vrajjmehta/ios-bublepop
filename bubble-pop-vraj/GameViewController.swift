@@ -1,48 +1,25 @@
+// --------Important INFO--------------
+//This project is programmed using SpriteKit & GamePlayKit
+//There are No Standard View Controllers as such, various "Scenes" make up the View Controller
+//Also, In Storyboard you wont be able to see different views
+//The views are dynamically created using SprikeKit
+
 import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
 
-//    @IBOutlet weak var playBtn: UIButton!
-//    @IBOutlet weak var settingsBtn: UIButton!
-//    @IBOutlet weak var usernameText: UITextField!
-//    @IBOutlet weak var highscoreBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         if let view = self.view as! SKView? {
-            let scene = MenuScene(size: view.bounds.size)
+            let scene = MainScreen(size: view.bounds.size)
             scene.scaleMode = .aspectFill
             
             // Present the scene
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+            view.showsFPS = false
+            view.showsNodeCount = false
         }
     }
-//    @IBAction func userNameAction(_ sender: Any) {
-//    }
-//    @IBAction func playButtonTouched(_ sender: Any) {
-//    }
-//    @IBAction func highScoreAction(_ sender: Any) {
-//        let highscoreScene = HighScoreScene(size: view!.bounds.size)
-//        moveToViewScene(scene: HighScoreScene)
-//    }
-//    @IBAction func settingsAction(_ sender: Any) {
-//    }
-//
-//    func moveToViewScene(scene: SKScene){
-//
-//        if let view = self.view as! SKView? {
-//            let scene = scene(size: view.bounds.size)
-//            scene.scaleMode = .aspectFill
-//
-//            // Present the scene
-//            view.presentScene(scene)
-//            view.ignoresSiblingOrder = true
-//            view.showsFPS = true
-//            view.showsNodeCount = true
-//        }
-//
-//    }
 }

@@ -1,3 +1,9 @@
+// --------Important INFO--------------
+//This project is programmed using SpriteKit & GamePlayKit
+//There are No Standard View Controllers as such, various "Scenes" make up the View Controller
+//Also, In Storyboard you wont be able to see different views
+//The views are dynamically created using SprikeKit
+
 import UIKit
 
 @UIApplicationMain

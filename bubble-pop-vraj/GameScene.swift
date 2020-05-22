@@ -1,3 +1,9 @@
+// --------Important INFO--------------
+//This project is programmed using SpriteKit & GamePlayKit
+//There are No Standard View Controllers as such, various "Scenes" make up the View Controller
+//Also, In Storyboard you wont be able to see different views
+//The views are dynamically created using SprikeKit
+
 import SpriteKit
 import GameplayKit
 
@@ -38,7 +44,7 @@ class GameScene: SKScene {
         
     }
     
-    /// Show welcome Panel with count down
+    // Show welcome Panel with count down
     func displayWelcomeScreen(){
         if welcomeTimeLbl == nil{
             welcomeTimeLbl = SKLabelNode(text: "\(welcomeTime)")
@@ -49,32 +55,13 @@ class GameScene: SKScene {
             welcomeTimeLbl!.position = CGPoint(x:frame.midX, y: frame.midY)
             welcomeTimeLbl!.zPosition = 10
             welcomeTimeLbl!.run(welcomeTimerAnimate)
-            
         }
         addChild(welcomeTimeLbl!)
     }
-    
-    ///Method returns UIColor of the bubble
-    func getUIColor(strColor: String) -> UIColor{
-        switch strColor {
-        case "Green":
-            return  UIColor.green
-        case "Blue":
-            return  UIColor.blue
-        case "Black":
-            return  UIColor.black
-        case "Red":
-            return UIColor.red
-        case "Pink":
-            return UIColor(red: 255/255, green: 0/255, blue: 144/255, alpha: 1.0)
-        default:
-            return  UIColor.white
-        }
-    }
-    
-    ///Start Game after welcome timer.
-    /// Initiate game timer and bubble timer
-    /// Create Labels
+   
+    // Start Game after welcome timer.
+    // Initiate game timer and bubble timer
+    // Create Labels
     func startGame(){
         labelsAdd()
         initaliseGameTimer()
@@ -85,9 +72,91 @@ class GameScene: SKScene {
         generateNewBubble()
     }
     
-    ///
-    /// Initiate Bubbles
-    ///
+    // Add top labels such as Timer, score and highscore
+    func labelsAdd(){
+        
+        let framePosition = frame.width / 6
+        
+        let timeLeftLbl = SKLabelNode(text: "Time Left")
+        timeLeftLbl.name = "timeLeftLbl"
+        timeLeftLbl.fontName = "Chalkduster"
+        timeLeftLbl.fontSize = 15.0
+        timeLeftLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+        timeLeftLbl.zPosition = 5
+        timeLeftLbl.position = CGPoint(x: framePosition, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
+        addChild(timeLeftLbl)
+        
+        if timeLeftVal == nil{
+            timeLeftVal = SKLabelNode(text: "00:00")
+            timeLeftVal!.name = "timeLeftVal"
+            timeLeftVal!.fontName = "Marker Felt"
+            timeLeftVal!.fontSize = 25.0
+            timeLeftVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+            timeLeftVal!.zPosition = 5
+            timeLeftVal!.position = CGPoint(x:framePosition, y: frame.maxY - timeLeftLbl.frame.size.height*6 )
+            addChild(timeLeftVal!)
+        }
+        
+        let scoreLbl = SKLabelNode(text: "Score")
+        scoreLbl.name = "scoreLbl"
+        scoreLbl.fontName = "Chalkduster"
+        scoreLbl.fontSize = 15.0
+        scoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+        scoreLbl.zPosition = 5
+        scoreLbl.position = CGPoint(x: framePosition*3, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
+        addChild(scoreLbl)
+        
+        if scoreLblVal == nil {
+            scoreLblVal = SKLabelNode(text: "\(Int(score))")
+            scoreLblVal!.name = "scoreLblVal"
+            scoreLblVal!.fontName = "Marker Felt"
+            scoreLblVal!.fontSize = 25.0
+            scoreLblVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+            scoreLblVal!.zPosition = 5
+            scoreLblVal!.position = CGPoint(x: framePosition*3, y: frame.maxY - timeLeftLbl.frame.size.height*6)
+            addChild(scoreLblVal!)
+        }
+        
+        let highScoreLbl = SKLabelNode(text: "High Score")
+        highScoreLbl.name = "scoreLbl"
+        highScoreLbl.fontName = "Chalkduster"
+        highScoreLbl.fontSize = 15.0
+        highScoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+        highScoreLbl.zPosition = 5
+        highScoreLbl.position = CGPoint(x: framePosition*5, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
+        addChild(highScoreLbl)
+        
+        if highScoreVal == nil {
+            highScoreVal = SKLabelNode(text: "\(UserDefaults.standard.integer(forKey: "Highscore"))")
+            highScoreVal!.name = "highScoreVal"
+            highScoreVal!.fontName = "Marker Felt"
+            highScoreVal!.fontSize = 25.0
+            highScoreVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
+            highScoreVal!.zPosition = 5
+            highScoreVal!.position = CGPoint(x: framePosition*5, y: frame.maxY - timeLeftLbl.frame.size.height*6 )
+            addChild(highScoreVal!)
+        }
+    }
+    
+   // Method returns UIColor of the bubble
+   func getUIColor(strColor: String) -> UIColor{
+       switch strColor {
+       case "Green":
+           return  UIColor.green
+       case "Blue":
+           return  UIColor.blue
+       case "Black":
+           return  UIColor.black
+       case "Red":
+           return UIColor.red
+       case "Pink":
+           return UIColor(red: 255/255, green: 0/255, blue: 144/255, alpha: 1.0)
+       default:
+           return  UIColor.white
+       }
+   }
+       
+    // Initiate Bubbles
     func initaliseBubble()  {
         bubbleTypes.append(Bubble(bubbleType: "Pink",bubbleValue: BubbleTypeScore.Pink,bubbleImgName: "bubble-pink"))
         bubbleTypes.append(Bubble(bubbleType: "Red",bubbleValue: BubbleTypeScore.Red,bubbleImgName: "bubble-red"))
@@ -97,8 +166,8 @@ class GameScene: SKScene {
     }
     
     
-    /// Start game timer
-    /// Calls gameTimeUpdate each interval (1 sec)
+    // Start game timer
+    // Calls gameTimeUpdate each interval (1 sec)
     func startCountdown(){
         if welcomeTimer == nil {
             welcomeTimer = Timer.scheduledTimer(
@@ -112,8 +181,8 @@ class GameScene: SKScene {
     }
     
     
-    /// Start game timer
-    /// Calls gameTimeUpdate each interval (1 sec)
+    // Start game timer
+    // Calls gameTimeUpdate each interval (1 sec)
     func initaliseGameTimer(){
         if gameTimer == nil {
             gameTimer = Timer.scheduledTimer(
@@ -127,8 +196,8 @@ class GameScene: SKScene {
     }
     
     
-    /// Bubble game timer method called gameBubbleUpdate
-    /// Method to check bubble's location. Calls in (0.01 ) intervals
+    // Bubble game timer method called gameBubbleUpdate
+    // Method to check bubble's location. Calls in (0.01 ) intervals
     func bubbleGameTimer(){
         if bubbleTimer == nil {
             bubbleTimer = Timer.scheduledTimer(
@@ -141,7 +210,7 @@ class GameScene: SKScene {
         }
     }
     
-    ///Method updates count down timer when game starts
+    // Method updates count down timer when game starts
     @objc func welcomeTimeUpdate(){
         welcomeTime -= 1
         if(welcomeTime > 0){
@@ -155,7 +224,7 @@ class GameScene: SKScene {
         welcomeTimeLbl?.run(welcomeTimerAnimate)
     }
     
-    /// Stop game timer and bubble timer when the game is over
+    // Stop game timer and bubble timer when the game is over
     func stopTimer() {
         if gameTimer != nil {
             gameTimer!.invalidate()
@@ -167,7 +236,7 @@ class GameScene: SKScene {
         }
     }
     
-    /// Stop welcome timer and hides welcome panel
+    // Stop welcome timer and hides welcome panel
     func stopWelcomeTimer(){
         if welcomeTimer != nil {
             welcomeTimer!.invalidate()
@@ -176,7 +245,7 @@ class GameScene: SKScene {
         welcomeTimeLbl?.removeFromParent()
     }
     
-    /// Method checks the bubble location can removes if it is out of the screen.
+    // Function checks the bubble location can removes if it is out of the screen.
     @objc func gameBubbleUpdate(){
         for b in bubbles{
             if(frame.maxY < b.frame.maxY || frame.minY > b.frame.minY ){
@@ -188,8 +257,8 @@ class GameScene: SKScene {
         }
     }
     
-    /// Method updates Game time
-    /// Set hishscore and scoreboard after game is over
+    // Function updates Game time
+    // Set highscore and scoreboard after game is over
     @objc func gameTimeUpdate(){
         if(timerCount % Int(refreshRate) == 0 ){
             removeRandomBubbles()
@@ -198,7 +267,6 @@ class GameScene: SKScene {
         timerCount += 1
         
         if(gameTime <= 0){
-            
             isGameOver = true
             stopTimer()
             
@@ -206,27 +274,25 @@ class GameScene: SKScene {
             if Int(score) > UserDefaults.standard.integer(forKey: "Highscore"){
                 UserDefaults.standard.set(Int(score), forKey: "Highscore")
             }
-            
             if(Int(score) > 0 ){
                 addScoreToScoreBoard()
             }
-            
             //Game over
             showScore()
-            
         }else{
             gameTime -= 1
             updateTimer()
         }
     }
     
-    /// Method add score to the scoreboard
+    // Function to add score to the scoreboard list
     func addScoreToScoreBoard(){
         let userScore = Scoreboard(name: GameSettings.username, score: Int(score))
         var currentScoreBoard: [Scoreboard]!
         //get current string for scoreboard
         let currentScoreBoardObj = UserDefaults.standard.object(forKey: "scoreboard")
         
+        // Error handling if score not being able to load
         if(currentScoreBoardObj != nil){
             if let decoded = UserDefaults.standard.object(forKey: "scoreboard") as? NSData {
                 do {
@@ -251,18 +317,17 @@ class GameScene: SKScene {
         }
     }
     
-    /// Update timer label with the current game timer
+    // Update the timer to the current time
     func updateTimer(){
         timeLeftVal!.text = "\(gameTime)"
         
-        if(gameTime < 6){
+        if(gameTime <= 5){
             timeLeftVal!.fontColor = UIColor.red
             timeLeftVal!.run(animateScore)
         }
     }
     
-    ///Check current score against the high score.
-    ///Update highscore if the score has exceeded the current score
+    // Check the current score compared to high score
     func checkHighScore(){
         if(Int(score) > highScore){
             highScoreVal!.text = "\(Int(score))"
@@ -271,7 +336,7 @@ class GameScene: SKScene {
         }
     }
     
-    /// Show game over panel with the final score
+    // Show game over panel with the final score
     func showScore(){
         
         let gameOverPanel = SKSpriteNode()
@@ -349,104 +414,32 @@ class GameScene: SKScene {
         
     }
     
-    /// Add top labels such as Timer, score and highscore
-    func labelsAdd(){
-        
-        let framePosition = frame.width / 6
-        
-        let timeLeftLbl = SKLabelNode(text: "Time Left")
-        timeLeftLbl.name = "timeLeftLbl"
-        timeLeftLbl.fontName = "Chalkduster"
-        timeLeftLbl.fontSize = 15.0
-        timeLeftLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
-        timeLeftLbl.zPosition = 5
-        timeLeftLbl.position = CGPoint(x: framePosition, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
-        addChild(timeLeftLbl)
-        
-        if timeLeftVal == nil{
-            timeLeftVal = SKLabelNode(text: "00:00")
-            timeLeftVal!.name = "timeLeftVal"
-            timeLeftVal!.fontName = "Marker Felt"
-            timeLeftVal!.fontSize = 25.0
-            timeLeftVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
-            timeLeftVal!.zPosition = 5
-            timeLeftVal!.position = CGPoint(x:framePosition, y: frame.maxY - timeLeftLbl.frame.size.height*6 )
-            addChild(timeLeftVal!)
-        }
-        
-        let scoreLbl = SKLabelNode(text: "Score")
-        scoreLbl.name = "scoreLbl"
-        scoreLbl.fontName = "Chalkduster"
-        scoreLbl.fontSize = 15.0
-        scoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
-        scoreLbl.zPosition = 5
-        scoreLbl.position = CGPoint(x: framePosition*3, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
-        addChild(scoreLbl)
-        
-        if scoreLblVal == nil {
-            scoreLblVal = SKLabelNode(text: "\(Int(score))")
-            scoreLblVal!.name = "scoreLblVal"
-            scoreLblVal!.fontName = "Marker Felt"
-            scoreLblVal!.fontSize = 25.0
-            scoreLblVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
-            scoreLblVal!.zPosition = 5
-            scoreLblVal!.position = CGPoint(x: framePosition*3, y: frame.maxY - timeLeftLbl.frame.size.height*6)
-            addChild(scoreLblVal!)
-        }
-        
-        let highScoreLbl = SKLabelNode(text: "High Score")
-        highScoreLbl.name = "scoreLbl"
-        highScoreLbl.fontName = "Chalkduster"
-        highScoreLbl.fontSize = 15.0
-        highScoreLbl.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
-        highScoreLbl.zPosition = 5
-        highScoreLbl.position = CGPoint(x: framePosition*5, y: frame.maxY - timeLeftLbl.frame.size.height*4 )
-        addChild(highScoreLbl)
-        
-        if highScoreVal == nil {
-            highScoreVal = SKLabelNode(text: "\(UserDefaults.standard.integer(forKey: "Highscore"))")
-            highScoreVal!.name = "highScoreVal"
-            highScoreVal!.fontName = "Marker Felt"
-            highScoreVal!.fontSize = 25.0
-            highScoreVal!.fontColor = UIColor(red: 230/255, green: 172/255, blue: 0/255, alpha: 1.0)
-            highScoreVal!.zPosition = 5
-            highScoreVal!.position = CGPoint(x: framePosition*5, y: frame.maxY - timeLeftLbl.frame.size.height*6 )
-            addChild(highScoreVal!)
-        }
-        
-        //        let backbtn = SKSpriteNode(imageNamed: "backbtn")
-        //        backbtn.name = "backbtn"
-        //        backbtn.zPosition = 5
-        //        backbtn.position = CGPoint(x:frame.minX + backbtn.frame.size.width, y: frame.minY + backbtn.frame.size.height )
-        //        addChild(backbtn)
-        
-    }
-    /// Get random bubble timer according to the probabiliy
-       func getRandomBubbleType() -> Bubble{
-           let randomInt = Int.random(in: 0..<101)
-           
-           if(randomInt < 40){
-               return getBallTypeForColor(color: "red")
-           }else if(randomInt > 40 && randomInt < 70){
-               return getBallTypeForColor(color: "pink")
-           }else if(randomInt > 70 && randomInt < 85){
-               return getBallTypeForColor(color: "green")
-           }else if(randomInt > 85 && randomInt < 95){
-               return getBallTypeForColor(color: "blue")
-           }else {
-               return getBallTypeForColor(color: "black")
-           }
-       }
+    // Get Random bubble color according to probability
+   func getRandomBubbleType() -> Bubble{
+       let randomNo = Int.random(in: 0..<101)
        
-       ///Get Ball object for color
-       func getBallTypeForColor(color: String) -> Bubble{
-           for type in bubbleTypes{
-               if(color == type.bubbleType.lowercased()){
-                   return type
-               }
-           }
-           return Bubble(bubbleType: "Red", bubbleValue: 1, bubbleImgName: "bubble-pink")
+       if(randomNo < 40){
+           return getColorForBubble(color: "red")
+       }else if(randomNo > 40 && randomNo < 70){
+           return getColorForBubble(color: "pink")
+       }else if(randomNo > 70 && randomNo < 85){
+           return getColorForBubble(color: "green")
+       }else if(randomNo > 85 && randomNo < 95){
+           return getColorForBubble(color: "blue")
+       }else {
+           return getColorForBubble(color: "black")
        }
+   }
+       
+    // Get the bubble color
+    func getColorForBubble(color: String) -> Bubble{
+       for type in bubbleTypes{
+           if(color == type.bubbleType.lowercased()){
+               return type
+           }
+       }
+       return Bubble(bubbleType: "Red", bubbleValue: 1, bubbleImgName: "bubble-pink")
+    }
     
     // Choose and remove a random bubble
     func removeRandomBubbles(){
@@ -664,7 +657,7 @@ class GameScene: SKScene {
             
             if touchedNode.name == "goBack" {
                 // Navigates to menu scene on back button
-                let gameScene = MenuScene(size: view!.bounds.size)
+                let gameScene = MainScreen(size: view!.bounds.size)
                 view!.presentScene(gameScene)
             }else if(touchNodeName.contains("Ball") && !isGameOver){
                 // Captures when user presses a bubble
